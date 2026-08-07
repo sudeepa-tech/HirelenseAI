@@ -1,0 +1,22 @@
+{
+  "name": "hirelens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HireLens — AI video interview platform. Microservices backend (Node.js) + React frontend.",
+  "workspaces": [
+    "services/gateway",
+    "services/ai-service",
+    "services/interview-service",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n gateway,ai,interview,web -c blue,magenta,green,cyan \"npm run dev -w services/gateway\" \"npm run dev -w services/ai-service\" \"npm run dev -w services/interview-service\" \"npm run dev -w frontend\"",
+    "start": "concurrently -n gateway,ai,interview -c blue,magenta,green \"npm start -w services/gateway\" \"npm start -w services/ai-service\" \"npm start -w services/interview-service\"",
+    "build": "npm run build -w frontend",
+    "test": "node services/interview-service/test/store.test.js && node services/interview-service/test/invite.service.test.js && node services/ai-service/test/parse.test.js",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
